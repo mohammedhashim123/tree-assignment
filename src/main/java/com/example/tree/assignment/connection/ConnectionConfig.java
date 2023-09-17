@@ -1,4 +1,4 @@
-package com.example.assignment.connection;
+package com.example.tree.assignment.connection;
 
 import javax.sql.DataSource;
 
