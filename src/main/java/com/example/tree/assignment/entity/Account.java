@@ -16,10 +16,10 @@ public class Account {
 	private int id;
 	
 	@Column(name="account_type")
-	private String account_type;
+	private String accountType;
 	
 	@Column(name="account_number")
-	private String account_number;
+	private String accountNumber;
 	
 	
 	public int getId() {
@@ -28,19 +28,17 @@ public class Account {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getAccount_type() {
-		return account_type;
+	public String getAccountType() {
+		return accountType;
 	}
-	public void setAccount_type(String account_type) {
-		this.account_type = account_type;
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
 	}
-	public String getAccount_number() {
-		return account_number;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
-	public void setAccount_number(String account_number) {
-		this.account_number = account_number;
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
-	
-	
 	
 }

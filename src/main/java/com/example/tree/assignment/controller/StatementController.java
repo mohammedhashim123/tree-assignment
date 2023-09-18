@@ -1,10 +1,13 @@
 package com.example.tree.assignment.controller;
 
+import javax.management.InvalidAttributeValueException;
 import javax.validation.Valid;
 
+import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +32,21 @@ public class StatementController {
 	@GetMapping("/getStatementByAccount")
 	public ResponseEntity<?> getStatementByAccount(@Valid SearchParam searchParam) {
 		
-		logger.info("Search by Account Id  " +searchParam.getAccountId());
+		logger.info("Search by Account number  " +searchParam.getAccountNumber());
 		
-		return ResponseEntity.ok(statementService.getStatementByParam(searchParam));
+		try {
+			return ResponseEntity.ok(statementService.getStatementByParam(searchParam));
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			
+		}catch (InvalidAttributeValueException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("from amount/date cannot be greater than to amount/date");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 }

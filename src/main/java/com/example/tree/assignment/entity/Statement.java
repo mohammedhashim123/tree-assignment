@@ -1,11 +1,17 @@
 package com.example.tree.assignment.entity;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.example.tree.assignment.helpers.DateHelper;
 
 @Entity
 @Table(name = "statement")
@@ -40,8 +46,9 @@ public class Statement {
 		this.accountId = accountId;
 	}
 
-	public String getDatefield() {
-		return datefield;
+	public LocalDate getDatefield() {
+	
+		return DateHelper.getLocalDateForString(datefield);
 	}
 
 	public void setDatefield(String datefield) {
