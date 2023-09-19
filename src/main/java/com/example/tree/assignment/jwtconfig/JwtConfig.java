@@ -67,23 +67,6 @@ public class JwtConfig implements Serializable  {
 		return expiration.before(new Date());
 	}
 
-	/*public String generateShortToken(String providerId, Map<BigDecimal, String> payers) {
-		Map<String, Object> claims = new HashMap<>();
-		claims.put("src", providerId);
-		claims.put("sub", providerId);
-		claims.put("payers", payers);
-		claims.put("prov", providerId);
-		claims.put("full_name", providerId);
-		claims.put("prov_id", providerId);
-		claims.put("cchi_id", providerId);
-		claims.put("username", providerId);
-		List<SimpleGrantedAuthority> rols = new ArrayList<>();
-		rols.add(new SimpleGrantedAuthority(providerId + "|3.0|101"));
-		payers.forEach((key, value) -> rols.add(new SimpleGrantedAuthority(providerId + "|3.0|" + key.toString())));
-		claims.put("rol", rols);
-		return doGenerateToken(claims);
-	}*/
-
 //generate token for user
 	public String generateToken(String userName ,String role) {
 		Map<String, Object> claims = new HashMap<>();

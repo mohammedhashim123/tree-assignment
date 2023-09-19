@@ -18,20 +18,26 @@ import com.example.tree.assignment.entity.User;
 import com.example.tree.assignment.repository.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserService implements UserDetailsService {
 	@Autowired
-	UserRepository userRepository; 
-	
+	UserRepository userRepository;
+
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> userOp= userRepository.findByUsername(username);
+		Optional<User> userOp = userRepository.findByUsername(username);
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		GrantedAuthority grantedAuthority=new SimpleGrantedAuthority( userOp.isEmpty() ? null : userOp.get().getRole());
-		authorities.add(grantedAuthority);
-		return userOp.isEmpty() ? null : new org.springframework.security.core.userdetails.User(userOp.get().getUsername(), userOp.get().getPassword(),
-				authorities);
-		 
+		if (!userOp.isEmpty()) {
+			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(
+					userOp.isEmpty() ? null : userOp.get().getRole());
+			authorities.add(grantedAuthority);
+			return userOp.isEmpty() ? null
+					: new org.springframework.security.core.userdetails.User(userOp.get().getUsername(),
+							userOp.get().getPassword(), authorities);
+		}else {
+			return null;
+		}
+
 	}
 
 }

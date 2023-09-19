@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,11 +29,10 @@ public class AuthenticationController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest)
 			throws Exception {
 
-		// authenticate(authenticationRequest.getUsername(),
-		// authenticationRequest.getPassword());
-
 		final UserDetails user = userService.loadUserByUsername(authenticationRequest.getUsername());
-
+		if(user == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user not found");
+		}
 		List<String> roles = user.getAuthorities().stream().map(item ->
 		  item.getAuthority()) .collect(Collectors.toList());
 		
